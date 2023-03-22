@@ -1,5 +1,5 @@
 # Team Work Makes The Dream Work:
-Week #11 Challenge to build a command line input that generates team members with information.
+Module #12 Challenge create a CMS from scratch to manage a comapny's employee database using Node.js, inquirer and MySQL.
 
 ## Description:
 Coming Soon
