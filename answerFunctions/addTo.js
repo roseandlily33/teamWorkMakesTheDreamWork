@@ -19,9 +19,9 @@ const addEmployee = () => {
             type: 'list',
             message: 'What is the employees role?',
             name: 'emRole',
-            choices: [1, 2, 3],
-           // choices: ['Account Manager', 'Sales Lead', 'Software Engineer', 'Accountant', 'Lawyer', 'Salesperson', 'Engineer'],
-        }, {
+            choices: [1, 2, 3, 4],
+        }, 
+        {
             type: 'list',
             message: 'Who is the employees manager?',
             name: 'emManager',
@@ -30,9 +30,12 @@ const addEmployee = () => {
 
     ])
     .then( answers => {
-    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [answers.emName, answers.emLast, answers.emRole, answers.emManager], (req, res) => {
-        
+    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', answers.emName, answers.emLast, answers.emRole, answers.emManager, function(err, results) {
+        if(err){console.log(err)} else {
+            console.table(results);
+        }
     })})
+    .catch(err => console.error(err));
 }
 const addRole = () => {
     inquirer.prompt([
@@ -56,9 +59,10 @@ const addRole = () => {
         },
     ])
     .then(answers => {
-    db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [answers.roleName, answers.roleSalary, answers.roleDept], (req, res) => {
+    db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [answers.roleName, answers.roleSalary, answers.roleDept], function(err, results) {
      
     })})
+    .catch(err => console.error(err));
    
 }
 
@@ -71,9 +75,10 @@ const addDepartment = () => {
         }
     ])
     .then(answers =>{
-    db.query('INSERT INTO departments (first_name, last_name, role_id, manager_id) VALUES(?)', answers.deptName, (req, res) => {
-        
+    db.query('INSERT INTO departments (first_name, last_name, role_id, manager_id) VALUES(?)', answers.deptName, function(err, results){
+
     })})
+    .catch(err => console.error(err));
 }
 
 

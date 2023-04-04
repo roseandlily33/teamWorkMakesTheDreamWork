@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const sql = require('mysql2');
+const db = require('./db/connection');
 const cTable = require('console.table');
 //const db = require('./db/connection');
 const {addEmployee , addRole, addDepartment} = require('./answerFunctions/addTo');
