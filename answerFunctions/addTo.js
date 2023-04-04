@@ -1,5 +1,5 @@
-const db = require('../db/sc');
 const inquirer = require('inquirer');
+const db = require('../db/connection');
 
 const addEmployee = () => {
     console.log('Adding an employee');
@@ -35,7 +35,7 @@ const addEmployee = () => {
 
     ])
     db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [emName, emLast, emName, emManager], (req, res) => {
-        
+
     })
 
 }

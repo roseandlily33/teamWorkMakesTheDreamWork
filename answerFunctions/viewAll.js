@@ -1,4 +1,5 @@
 const cTable = require('console.table');
+const db = require('../db/connection');
 
 const viewAllDepartments = () => {
     db.query('SELECT * FROM departments', (req, res) => {

@@ -20,5 +20,5 @@ VALUES
 ('Austin', 'Fowler', 2, 2),
 ('Tristen', 'Anderson', 5, null),
 ('Kendall', 'Parks', 3, 4),
-('Jason', 'Lindsey', 1), null,
-('Max','Hunter', 6, 2);
+('Jason', 'Lindsey', 1, null),
+('Max', 'Hunter', 6, 2);
