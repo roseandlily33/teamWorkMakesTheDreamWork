@@ -1,8 +1,8 @@
 # Team Work Makes The Dream Work:
-Module #12 Challenge create a CMS from scratch to manage a comapny's employee database using Node.js, inquirer and MySQL.
+Week #12 Challenge 
 
 ## Description:
-Coming Soon
+A content management system (CMS) the allows easy access to information that is stored in databases. Using node.js, inquierer, and MySQL.
 
 ## Screenshots:
 Coming Soon
