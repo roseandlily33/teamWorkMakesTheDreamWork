@@ -1,6 +1,15 @@
 
+const viewAllDepartments = () => {
+
+}
+const viewAllEmployees = () => {
+
+}
+
+const viewAllRoles =() => {
+
+}
 
 
 
-
-module.exports = {}; 
+module.exports = {viewAllDepartments, viewAllRoles, viewAllEmployees}; 

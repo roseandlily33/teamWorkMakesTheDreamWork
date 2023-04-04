@@ -1,5 +1,15 @@
 
 
+const addEmployee = () => {
+
+}
+const addDepartment = () => {
+
+}
+
+const addRole = () => {
+
+}
 
 
-module.exports = {};
+module.exports = {addDepartment, addEmployee, addRole};
