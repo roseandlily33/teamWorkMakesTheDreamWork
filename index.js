@@ -12,15 +12,15 @@ const question = [
         type: 'list',
         message: 'What would you like to do?',
         name: 'action',
-        choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update A Employee', 'Quit'],
+        choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update A Employee', 'Quit']
     }
 ];
 
 function init(){
 inquirer.prompt(question)
 .then(response => {
-    console.log(response);
-    switch(response){
+    const {action} = response;
+    switch(action){
         case 'View All Employees': viewAllEmployees() ;break;
         case 'View All Roles': viewAllRoles() ; break;
         case 'View All Departments': viewAllDepartments() ; break;
@@ -32,9 +32,6 @@ inquirer.prompt(question)
         default: console.log('This is not a valid action'); break;
     }
 })
-
-.then(inquirer.prompt(question))
-
 .catch(err => {
     console.log(err);
 })}
