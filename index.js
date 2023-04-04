@@ -27,7 +27,7 @@ inquirer.prompt(question)
         case 'Add Role': addRole() ; break;
         case 'Add Department': addDepartment() ; break;
         case 'Update A Employee': updateEmployee(); break;
-        case 'Quit': break;
+        case 'Quit': break;//prompt.exit(); break; 
         default: console.log('This is not a valid action'); break;
     }
 })
