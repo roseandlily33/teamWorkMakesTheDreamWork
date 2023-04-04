@@ -11,7 +11,7 @@ const question = [
         type: 'list',
         message: 'What would you like to do?',
         name: 'action',
-        choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update A Employee'],
+        choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update A Employee', 'Quit'],
     }
 ];
 
@@ -27,9 +27,13 @@ inquirer.prompt(question)
         case 'Add Role': addRole() ; break;
         case 'Add Department': addDepartment() ; break;
         case 'Update A Employee': updateEmployee(); break;
+        case 'Quit': break;
         default: console.log('This is not a valid action'); break;
     }
 })
+
+.then(inquirer.prompt(question))
+
 .catch(err => {
     console.log(err);
 })}

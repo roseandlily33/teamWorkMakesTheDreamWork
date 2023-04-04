@@ -1,6 +1,6 @@
 
+const updateEmployee = () => {
 
+}
 
-
-
-module.exports = {};
+module.exports = {updateEmployee};
