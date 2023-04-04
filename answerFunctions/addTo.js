@@ -8,17 +8,12 @@ const addEmployee = () => {
             type: 'input',
             message: 'Employees First Name?',
             name: 'emName',
-            validate: name => {
-                name ? true : console.log('Add a name'); false;
-            }
         },
         {
             type: 'input',
             message: 'Employees Last Name?',
             name: 'emLast',
-            validate: lastName => {
-                lastName ? true : console.log('Add a last name'); false;
-            }
+           
         },
         {
             type: 'list',
@@ -30,14 +25,14 @@ const addEmployee = () => {
             type: 'list',
             message: 'Who is the employees manager?',
             name: 'emManager',
-            choices: ['null']
+            choices: [1, 2, 3, 'null'],
         }
 
     ])
-    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', ['emName', 'emLast', 'emRole', 'emManager'], (req, res) => {
-        console.log('Name request is send' + req);
-    })
-
+    .then( answers => {
+    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [answers.emName, answers.emLast, answers.emRole, answers.emManager], (req, res) => {
+        
+    })})
 }
 const addRole = () => {
     inquirer.prompt([
@@ -45,17 +40,14 @@ const addRole = () => {
             type: 'input',
             message: 'What is the role?',
             name: 'roleName',
-            validate: name => {
-                name ? true : console.log('Add a role name'); false;
-            }
+            
         },
         {
             type: 'input',
             message: 'What is the salary?',
             name: 'roleSalary',
-            validate: salary => {
-                salary ? true : console.log('Add a salary'); false;
-         }},
+            
+         },
         {
             type: 'list',
             message: 'What department does this role go in?',
@@ -63,9 +55,10 @@ const addRole = () => {
             choices: ['Sales', 'Engineering', 'Finance', 'Legal'],
         },
     ])
-    db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [roleName, roleSalary, roleDept], (req, res) => {
+    .then(answers => {
+    db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [answers.roleName, answers.roleSalary, answers.roleDept], (req, res) => {
      
-    })
+    })})
    
 }
 
@@ -75,14 +68,12 @@ const addDepartment = () => {
             type: 'name',
             message: 'What is the department called?',
             name: 'deptName',
-            validate: dept => {
-                dept ? true : console.log('Add a valid department name '); false;
-            }
         }
     ])
-    db.query('INSERT INTO departments (first_name, last_name, role_id, manager_id) VALUES(?)', deptName, (req, res) => {
-
-    })
+    .then(answers =>{
+    db.query('INSERT INTO departments (first_name, last_name, role_id, manager_id) VALUES(?)', answers.deptName, (req, res) => {
+        
+    })})
 }
 
 

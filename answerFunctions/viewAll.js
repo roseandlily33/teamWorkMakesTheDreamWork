@@ -3,8 +3,11 @@ const db = require('../db/connection');
 
 const viewAllDepartments = () => {
     db.query('SELECT * FROM departments', (req, res) => {
-        console.log('Getting departments table' + res);
-        console.table(res);
+       console.log(req +'req');
+       console.log(res+ 'res');
+       console.log('Getting departments table' + res+ req);
+       cTable.getTable(res);
+        
         //cTable.getTable(req);
     })
 }
