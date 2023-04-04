@@ -9,7 +9,7 @@ const addEmployee = () => {
             message: 'Employees First Name?',
             name: 'emName',
             validate: name => {
-                name ? true : false;
+                name ? true : console.log('Add a name'); false;
             }
         },
         {
@@ -17,7 +17,7 @@ const addEmployee = () => {
             message: 'Employees Last Name?',
             name: 'emLast',
             validate: lastName => {
-                lastName ? true : false;
+                lastName ? true : console.log('Add a last name'); false;
             }
 
         },
@@ -34,7 +34,9 @@ const addEmployee = () => {
         }
 
     ])
-
+    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [emName, emLast, emName, emManager], (req, res) => {
+        
+    })
 
 }
 const addRole = () => {
@@ -44,7 +46,7 @@ const addRole = () => {
             message: 'What is the role?',
             name: 'roleName',
             validate: name => {
-                name ? true : false;
+                name ? true : console.log('Add a role name'); false;
             }
         },
         {
@@ -52,7 +54,7 @@ const addRole = () => {
             message: 'What is the salary?',
             name: 'roleSalary',
             validate: salary => {
-                salary ? true : false;
+                salary ? true : console.log('Add a salary'); false;
          }},
         {
             type: 'list',
@@ -61,6 +63,9 @@ const addRole = () => {
             choices: ['Sales', 'Engineering', 'Finance', 'Legal'],
         },
     ])
+    db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [roleName, roleSalary, roleDept], (req, res) => {
+
+    })
    
 }
 
@@ -71,12 +76,13 @@ const addDepartment = () => {
             message: 'What is the department called?',
             name: 'deptName',
             validate: dept => {
-                dept ? true : false;
+                dept ? true : console.log('Add a valid department name '); false;
             }
         }
     ])
+    db.query('INSERT INTO departments (first_name, last_name, role_id, manager_id) VALUES(?)', deptName, (req, res) => {
 
-
+    })
 }
 
 
