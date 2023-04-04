@@ -1,8 +1,5 @@
 const inquirer = require('inquirer');
-const fs = require('fs');
-const db = require('./db/connection');
-const cTable = require('console.table');
-//const db = require('./db/connection');
+
 const {addEmployee , addRole, addDepartment} = require('./answerFunctions/addTo');
 const {updateEmployee} = require('./answerFunctions/update');
 const {viewAllDepartments, viewAllEmployees, viewAllRoles} = require('./answerFunctions/viewAll');
@@ -27,8 +24,8 @@ inquirer.prompt(question)
         case 'Add Employee': addEmployee() ; break;
         case 'Add Role': addRole() ; break;
         case 'Add Department': addDepartment() ; break;
-       // case 'Update A Employee': updateEmployee(); break;
-        //case 'Quit': break;//prompt.exit(); break; 
+        case 'Update A Employee': updateEmployee(); break;
+        case 'Quit': prompt.exit(); break; 
         default: console.log('This is not a valid action'); break;
     }
 })
