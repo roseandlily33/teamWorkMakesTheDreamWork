@@ -3,9 +3,10 @@ const fs = require('fs');
 
 const questions = [
     {
-        type: 'input',
-        message: 'What\'s your team member\'s name?',
-        type: 'name',
+        type: 'list',
+        message: 'What would you like to do?',
+        type: 'action',
+        value: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update And Employee']
     }, {
         type: 'input',
         message: 'Employee ID',

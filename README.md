@@ -7,6 +7,9 @@ A content management system (CMS) the allows easy access to information that is 
 ## Screenshots:
 Coming Soon
 
+## Video:
+Coming Soon
+
 ## Difficulties:
 Coming Soon
 
