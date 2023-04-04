@@ -9,15 +9,15 @@ const question = [
     {
         type: 'list',
         message: 'What would you like to do?',
-        type: 'action',
-        value: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update And Employee']
+        name: 'action',
+        choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update And Employee'],
     }
 ];
 
 function init(){
 inquirer.prompt(question)
 .then(response => {
-    console.log(response)
+    console.log(response);
 })
 .catch(err => {
     console.log(err);
