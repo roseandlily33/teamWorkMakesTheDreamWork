@@ -1,5 +1,9 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const sql = require('mysql2');
+const {} = require('./answerFunctions/addTo');
+const {} = require('./answerFunctions/update');
+const {} = require('./answerFunctions/viewAll');
 
 const question = [
     {
@@ -9,9 +13,7 @@ const question = [
         value: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Add Role', 'Add Department', 'Update And Employee']
     }
 ];
-//Intern: name, ID, email and school then taken back to menu
-//Engineer: name, ID, email, github username, taken back to menu
-//Finished building: HTML is generated
+
 function init(){
 inquirer.prompt(question)
 .then(response => {
