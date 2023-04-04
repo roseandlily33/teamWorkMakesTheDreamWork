@@ -64,7 +64,7 @@ const addRole = () => {
         },
     ])
     db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [roleName, roleSalary, roleDept], (req, res) => {
-
+     
     })
    
 }
