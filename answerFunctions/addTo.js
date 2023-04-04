@@ -19,23 +19,23 @@ const addEmployee = () => {
             validate: lastName => {
                 lastName ? true : console.log('Add a last name'); false;
             }
-
         },
         {
             type: 'list',
             message: 'What is the employees role?',
             name: 'emRole',
-            choices: ['Account Manager', 'Sales Lead', 'Software Engineer', 'Accountant', 'Lawyer', 'Salesperson', 'Engineer'],
+            choices: [1, 2, 3],
+           // choices: ['Account Manager', 'Sales Lead', 'Software Engineer', 'Accountant', 'Lawyer', 'Salesperson', 'Engineer'],
         }, {
             type: 'list',
             message: 'Who is the employees manager?',
             name: 'emManager',
-            choices: ['null',]
+            choices: ['null']
         }
 
     ])
-    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [emName, emLast, emName, emManager], (req, res) => {
-
+    db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', ['emName', 'emLast', 'emRole', 'emManager'], (req, res) => {
+        console.log('Name request is send' + req);
     })
 
 }
