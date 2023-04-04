@@ -1,13 +1,14 @@
 USE company_db;
+
 INSERT INTO department(name)
 VALUES('Sales'), ('Engineering'), ('Finance'), ('Legal');
 
-INSERT INTO role (title, salary)
-VALUES('Account Manager', 80000), ('Sales Lead', 75000), ('Software Engineer', 120000), ('Accountant', 90000), ('Lawyer', 130000), ('Salesperson', 700000), ('Engineer', 123000);
+INSERT INTO role (title, salary, department_id)
+VALUES('Account Manager', 80000, ), ('Sales Lead', 75000), ('Software Engineer', 120000), ('Accountant', 90000), ('Lawyer', 130000), ('Salesperson', 700000), ('Engineer', 123000);
 
-INSERT INTO employee (first_name, last_name, role_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-('Cameron', 'Brooks', 2), 
+('Cameron', 'Brooks', ), 
 ('Blake', 'Rhodes', 1),
 ('Sienna', 'St.Clair', 3),
 ('Veronica','Matthews', 2 ),
