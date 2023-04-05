@@ -4,7 +4,7 @@ const { empRoles } = require('./addTo');
 
 const empArray = ['Cameron', 'Blake', 'Veronica', 'Nicolas', 'Gwen', 'Dylan', 'Madison'];
 
-const updateEmployee = () => {
+const updateEmployee = (init) => {
     console.log('Updating an employee')
     inquirer.prompt([
         {
@@ -20,11 +20,17 @@ const updateEmployee = () => {
             choices: empRoles,
         }
     ])
+    .then(answers => {
+        const newEmp = answers.map(({role, title})=> {
+
+        })
+    })
     .then(answer => {
     db.query('UPDATE employee SET role = (?) WHERE id = (?)', [answer.upRole, answer.upId], function(err, results){   
         if(err){console.log(err)}
          else {
             console.table(results);
+            init();
         }
  })
 
