@@ -1,7 +1,5 @@
 const db = require('../db/connection');
 
-
-
 const viewAllDepartments = () => {
     db.query('SELECT * FROM department', function (err, results) {
         if (err) {
@@ -41,6 +39,5 @@ const viewAllRoles = () => {
         }
     })
 }
-
 
 module.exports = { viewAllDepartments, viewAllRoles, viewAllEmployees }; 

@@ -12,8 +12,8 @@ const updateEmployee = () => {
             message: 'Which Employee would you like to update?',
             name: 'upId',
             choices: empArray,
-
-        },{
+        },
+        {
             type: 'list',
             message: 'What is the role you would like to change to?',
             name: 'upRole',
@@ -21,7 +21,7 @@ const updateEmployee = () => {
         }
     ])
     .then(answer => {
-    db.query('UPDATE employee SET role_id = (?) WHERE id = (?)', [answer.upRole, answer.upId], function(err, results){
+    db.query('UPDATE employee SET role = (?) WHERE id = (?)', [answer.upRole, answer.upId], function(err, results){   
         if(err){console.log(err)}
          else {
             console.table(results);
