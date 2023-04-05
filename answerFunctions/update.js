@@ -20,13 +20,10 @@ const updateEmployee = (init) => {
             choices: empRoles,
         }
     ])
-    .then(answers => {
-        const newEmp = answers.map(({role, title})=> {
-
-        })
-    })
     .then(answer => {
-    db.query('UPDATE employee SET role = (?) WHERE id = (?)', [answer.upRole, answer.upId], function(err, results){   
+    const roleParams = [answer.upId, answer.upRole];
+    roleParams.map()
+    db.query('UPDATE employee SET role = (?) WHERE id = (?)', roleParams, function(err, results){   
         if(err){console.log(err)}
          else {
             console.table(results);
