@@ -34,3 +34,5 @@ inquirer.prompt(question)
 })}
 
 init();
+
+module.exports = init;

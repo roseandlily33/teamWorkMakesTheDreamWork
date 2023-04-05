@@ -26,7 +26,9 @@ const updateEmployee = () => {
          else {
             console.table(results);
         }
- }) })
+ })
+
+})
  .catch(err => console.error(err));
 }
 

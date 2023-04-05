@@ -1,4 +1,5 @@
 const db = require('../db/connection');
+const {init} = require('../index');
 
 const viewAllDepartments = () => {
     db.query('SELECT * FROM department', function (err, results) {
@@ -8,6 +9,7 @@ const viewAllDepartments = () => {
         else {
             console.log('Getting departments');
             console.table(results);
+            init();
         }
     })
 }
@@ -22,8 +24,10 @@ const viewAllEmployees = () => {
         else {
             console.log('Getting employees');
             console.table(results);
+            
         }
     })
+    init();
 }
 //Complete
 const viewAllRoles = () => {
@@ -36,6 +40,7 @@ const viewAllRoles = () => {
         else {
             console.log('Getting roles');
             console.table(results);  
+            init();
         }
     })
 }
