@@ -11,7 +11,8 @@ const updateEmployee = (init) => {
             type: 'list',
             message: 'Which Employee would you like to update?',
             name: 'upId',
-            choices: empArray,
+            choices: [{name: 'Cameron', value: 1},
+        ]
         },
         {
             type: 'list',
@@ -21,18 +22,27 @@ const updateEmployee = (init) => {
         }
     ])
     .then(answer => {
-    const roleParams = [answer.upId, answer.upRole];
-    roleParams.map()
-    db.query('UPDATE employee SET role = (?) WHERE id = (?)', roleParams, function(err, results){   
-        if(err){console.log(err)}
-         else {
-            console.table(results);
-            init();
-        }
- })
-
-})
+    
+        db.query(`SELECT roles.id, roles.title, roles.salary, department.dept_name FROM roles
+        LEFT JOIN department ON department.id = roles.department_id
+        ORDER BY roles.id;
+        
+        `, function (err, results) {
+            if (err) { console.log(err) }
+            else {
+                console.log('Getting roles');
+                return results;
+            }
+        })
  .catch(err => console.error(err));
-}
+})}
 
 module.exports = {updateEmployee};
+
+db.query('UPDATE employee SET role = (?) WHERE id = (?)', roleParams, function(err, results){   
+    if(err){console.log(err)}
+     else {
+        console.table(results);
+        init();
+    }
+})

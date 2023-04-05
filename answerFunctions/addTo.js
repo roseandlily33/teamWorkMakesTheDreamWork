@@ -23,7 +23,7 @@ const addEmployee = (init) => {
             type: 'list',
             message: 'What is the employees role?',
             name: 'emRole',
-            choices: empRoles ,
+            choices: empRoles,
         },
         {
             type: 'list',
