@@ -1,17 +1,23 @@
 const db = require('../db/connection');
 const inquirer = require('inquirer');
+const { empRoles } = require('./addTo');
+
+const empArray = ['Cameron', 'Blake', 'Veronica', 'Nicolas', 'Gwen', 'Dylan', 'Madison'];
 
 const updateEmployee = () => {
     console.log('Updating an employee')
     inquirer.prompt([
         {
-            type: 'input',
-            message: 'What is the employees id you would like to update?',
+            type: 'list',
+            message: 'Which Employee would you like to update?',
             name: 'upId',
+            choices: empArray,
+
         },{
-            type: 'input',
+            type: 'list',
             message: 'What is the role you would like to change to?',
             name: 'upRole',
+            choices: empRoles,
         }
     ])
     .then(answer => {

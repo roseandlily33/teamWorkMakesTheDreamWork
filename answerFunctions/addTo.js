@@ -1,6 +1,10 @@
 const inquirer = require('inquirer');
 const db = require('../db/connection');
 
+const deptArray = ['Sales', 'Engineering', 'Finance', 'Legal'];
+const  managerArray = ['Blake', 'Dylan', 'Veronica', 'Max'];
+const empRoles = ['Account Manager', 'Sales Lead', 'Software Engineer', 'Accountant', 'Lawyer', 'Salesperson', 'Engineer'];
+
 const addEmployee = () => {
     console.log('Adding an employee');
     inquirer.prompt([
@@ -19,13 +23,13 @@ const addEmployee = () => {
             type: 'list',
             message: 'What is the employees role?',
             name: 'emRole',
-            choices: [1, 2, 3, 4],
+            choices: empRoles ,
         },
         {
             type: 'list',
             message: 'Who is the employees manager?',
             name: 'emManager',
-            choices: [1, 2, 3, 'null'],
+            choices: managerArray,
         }
 
     ])
@@ -57,7 +61,7 @@ const addRole = () => {
             type: 'list',
             message: 'What department does this role go in?',
             name: 'roleDept',
-            choices: [1, 2, 3, 4],
+            choices: deptArray,
         },
     ])
         .then(answers => {
@@ -70,7 +74,7 @@ const addRole = () => {
         })
         .catch(err => console.error(err));
 }
-
+//May have to add department name and value sepeartley
 const addDepartment = () => {
     inquirer.prompt([
         {
@@ -83,11 +87,12 @@ const addDepartment = () => {
             db.query('INSERT INTO department (dept_name) VALUES(?)', [answers.deptName], function (err, results) {
                 if (err) { console.log(err) }
                 else {
-                    console.table(results);
+                    deptArray.push(answers.deptName);
+                    console.log(`Added ${answers.deptName} to the table`)
                 }
             })
         })
         .catch(err => console.error(err));
 }
 
-module.exports = { addDepartment, addEmployee, addRole };
+module.exports = { addDepartment, addEmployee, addRole, empRoles};
