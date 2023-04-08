@@ -1,10 +1,6 @@
 const inquirer = require('inquirer');
 const db = require('../db/connection');
 
-const deptArray = ['Sales', 'Engineering', 'Finance', 'Legal'];
-const  managerArray = ['Blake', 'Dylan', 'Veronica', 'Max'];
-const empRoles = ['Account Manager', 'Sales Lead', 'Software Engineer', 'Accountant', 'Lawyer', 'Salesperson', 'Engineer'];
-
 const addEmployee = (init) => {
     console.log('Adding an employee');
     inquirer.prompt([
@@ -57,22 +53,31 @@ const addRole = (init) => {
             message: 'What is the salary?',
             name: 'roleSalary',
 
-        },
-        {
-            type: 'list',
-            message: 'What department does this role go in?',
-            name: 'roleDept',
-            choices: deptArray,
-        },
-    ])
-        .then(answers => {
-            db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', [answers.roleName, answers.roleSalary, answers.roleDept], function (err, results) {
+        }])
+        .then(answer => {
+        let selectedParams = [answer.roleName, answer.roleSalary];
+        db.query(`SELECT dept_name, id FROM department`, function(err, results){
+            if(err){console.log(err);}
+            else {
+                console.log(results);
+                const dept = results.map(({dept_name, id})=> ({name: dept_name, value: id}));
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        message: 'What role does the department match?',
+                        name: 'roleDept',
+                        choices: dept
+                    }
+                ])
+                selectedParams.push(answer.dept);
+            }
+        })})
+        //Throwing an error that selectedParams are not defined. 
+        .then(answer => {
+            db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', selectedParams, function (err, results) {
                 if (err) { console.log(err); 
-                } 
-                else{
-                   switch(answers.roleDept){
-                    case 'Sales' : db.query('')
-                   }
+                   } else {
+                    console.log(answer + 'I am here');
                     console.table(results);
                     init();
                 }
@@ -80,8 +85,9 @@ const addRole = (init) => {
         })
         .catch(err => console.error(err));
 }
-//May have to add department name and value sepeartley
-const addDepartment = () => {
+
+//This is officially done and working!
+const addDepartment = (init) => {
     inquirer.prompt([
         {
             type: 'input',
@@ -94,11 +100,12 @@ const addDepartment = () => {
                 if (err) { console.log(err) }
                 else {
                     deptArray.push(answers.deptName);
-                    console.log(`Added ${answers.deptName} to the table`)
+                    console.log(`Added ${answers.deptName} to the table`);
+                    init();
                 }
             })
         })
         .catch(err => console.error(err));
 }
 
-module.exports = { addDepartment, addEmployee, addRole, empRoles};
+module.exports = { addDepartment, addEmployee, addRole};
