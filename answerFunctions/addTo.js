@@ -4,6 +4,7 @@ const db = require('../db/connection');
 
 const addEmployee = (init) => {
     console.log('Adding an employee');
+    var selectedParams = [];
     inquirer.prompt([
         {
             type: 'input',
@@ -18,55 +19,51 @@ const addEmployee = (init) => {
        
     ])
     .then(answer => {
-        const selectedParams = [];
-        db.query('SELECT', function(err, result) {
+        db.query('SELECT title, department_id FROM roles', function(err, result) {
             if (err) { console.log(err) }
             else {
-                selectedParams.push(emName, emLast)
-                const roles = results.map({})
+                selectedParams.push(answer.emName);
+                selectedParams.push(answer.emLast);
+                const roles = 
+                result.map(({title, department_id}) => ({name: title, value: department_id}));
+                inquirer.prompt([
+                    {
+                        type: 'list',
+                        message: 'What is the employees role?',
+                        name: 'emRole',
+                        choices: roles,
+                    }
+                ])
+               
             }
-        })
-     
-        inquirer.prompt([
-        {
-            type: 'list',
-            message: 'What is the employees role?',
-            name: 'emRole',
-            choices: comingsoon,
-        }
-    ])
-    selectedParams.push(emRole);
-    }) 
-    .then(answer => {
-        db.query('SELECT', function(err, result) {
-            if (err) { console.log(err) }
-            else {
-                
-                const managers = result.map({})
-
-            }
-        })
-        .then(()=> {
-        inquirer.prompt([
-            {
-                type: 'list',
-                message: 'Who is the employees manager?',
-                name: 'emManager',
-               choices: comingsoon,
-            }
-        ])
-        selectedParams.push(emManager);
-    })})
-
-        .then(answers => {
-            db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [answers.emName, answers.emLast, answers.emRole, answers.emManager], function (err, results) {
+        })  })
+        .then(answer => {
+            selectedParams.push(answer.emRole);
+            db.query('SELECT * FROM employee WHERE manager_id = "null"', function(err, result) {
                 if (err) { console.log(err) }
                 else {
-                    console.table(results);
-                    init();
+                    const managers = result.map(({first_name, manager_id}) => 
+                    ({name: first_name, value: manager_id}))
+                    inquirer.prompt([
+                        {
+                            type: 'list',
+                            message: 'Who is the employees manager?',
+                            name: 'emManager',
+                            choices: managers,
+                        }
+                    ])
                 }
-            })
-        })
+            })  }) 
+            .then(answers => {
+                selectedParams.push(answers.emManager);
+                db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', selectedParams, function (err, results) {
+                    if (err) { console.log(err) }
+                    else {
+                        console.table(results);
+                        init();
+                    }
+                }) })
+           // }) }) })
         .catch(err => console.error(err));
 }
 //This is done and working
@@ -88,10 +85,11 @@ const addRole = (init) => {
         .then(answer => {
         db.query(`SELECT dept_name, id FROM department`, function(err, results){
             if(err){console.log(err);}
+
             selectedParams.push(answer.roleName);
             selectedParams.push(answer.roleSalary);
                 const dept = results.map(({dept_name, id})=> ({name: dept_name, value: id}));
-                console.log(dept);
+
                 inquirer.prompt([
                     {
                         type: 'list',
