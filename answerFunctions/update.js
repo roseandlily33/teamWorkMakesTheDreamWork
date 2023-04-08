@@ -3,7 +3,6 @@ const inquirer = require('inquirer');
 
 const updateEmployee = (init) => {
     console.log('Updating an employee');
-
     db.query(`SELECT roles.id, roles.title, roles.salary, department.dept_name FROM roles
     LEFT JOIN department ON department.id = roles.department_id
     ORDER BY roles.id;`,

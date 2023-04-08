@@ -16,7 +16,7 @@ const addEmployee = (init) => {
             message: 'Employees Last Name?',
             name: 'emLast',
         },
-       
+
     ])
     .then(answer => {
         db.query('SELECT title, department_id FROM roles', function(err, result) {
@@ -26,6 +26,7 @@ const addEmployee = (init) => {
                 selectedParams.push(answer.emLast);
                 const roles = 
                 result.map(({title, department_id}) => ({name: title, value: department_id}));
+                console.log('Before role prompts')
                 inquirer.prompt([
                     {
                         type: 'list',
@@ -34,15 +35,16 @@ const addEmployee = (init) => {
                         choices: roles,
                     }
                 ])
+                console.log('After role prompts');
+                selectedParams.push(answer.emRole);
             }
         })  })
         .then(answer => {
-            selectedParams.push(answer.emRole);
-            db.query('SELECT * FROM employee WHERE manager_id = "null"', function(err, result) {
+            db.query(`SELECT first_name, manager_id FROM employee WHERE manager_id IS NULL`, function(err, result) {
                 if (err) { console.log(err) }
-                else {
                     const managers = result.map(({first_name, manager_id}) => 
-                    ({name: first_name, value: manager_id}))
+                    ({name: first_name, value: manager_id}));
+                    console.log('Before manager')
                     inquirer.prompt([
                         {
                             type: 'list',
@@ -51,10 +53,10 @@ const addEmployee = (init) => {
                             choices: managers,
                         }
                     ])
-                }
+                    console.log('After manager');
+                   selectedParams.push(answer.emManager);
             })  }) 
             .then(answers => {
-                selectedParams.push(answers.emManager);
                 db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', selectedParams, function (err, results) {
                     if (err) { console.log(err) }
                     else {
@@ -62,7 +64,7 @@ const addEmployee = (init) => {
                         init();
                     }
                 }) })
-           // }) }) })
+
         .catch(err => console.error(err));
 }
 //This is done and working
