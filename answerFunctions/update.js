@@ -23,7 +23,6 @@ const updateEmployee = async (init) => {
       name: title,
       value: department_id,
     }));
-    console.log(rolesList);
 
     inquirer
       .prompt([
