@@ -14,20 +14,19 @@ const addEmployee = (init) => {
             type: 'input',
             message: 'Employees Last Name?',
             name: 'emLast',
-
         },
        
     ])
     .then(answer => {
-        const selectedParams = [answer.emName, emLast];
-
+        const selectedParams = [];
         db.query('SELECT', function(err, result) {
             if (err) { console.log(err) }
             else {
+                selectedParams.push(emName, emLast)
                 const roles = results.map({})
             }
         })
-        .then(()=> {
+     
         inquirer.prompt([
         {
             type: 'list',
@@ -37,11 +36,12 @@ const addEmployee = (init) => {
         }
     ])
     selectedParams.push(emRole);
-    }) })
+    }) 
     .then(answer => {
         db.query('SELECT', function(err, result) {
             if (err) { console.log(err) }
             else {
+                
                 const managers = result.map({})
 
             }
@@ -69,7 +69,7 @@ const addEmployee = (init) => {
         })
         .catch(err => console.error(err));
 }
-
+//This is done and working
 const addRole = (init) => {
     let selectedParams = [];
     inquirer.prompt([
@@ -100,6 +100,7 @@ const addRole = (init) => {
                         choices: dept
                     }
                 ])
+                .then(answer => {
                 selectedParams.push(answer.roleDept);
                 db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', selectedParams, function (err, results) {
                     if (err) { console.log(err); 
@@ -108,13 +109,12 @@ const addRole = (init) => {
                         console.table(results);
                        init();
                     }
-                })  
+                })  })
         })}) 
-        
         .catch(err => console.error(err));
 }
 
-//This is officially done and working!
+//This is done and working!
 const addDepartment = (init) => {
     inquirer.prompt([
         {
