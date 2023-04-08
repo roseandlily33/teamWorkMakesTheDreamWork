@@ -110,6 +110,7 @@ const addRole = (init) => {
                     }
                 })  
         })}) 
+        
         .catch(err => console.error(err));
 }
 
