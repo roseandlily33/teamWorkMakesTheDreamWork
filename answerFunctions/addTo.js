@@ -1,73 +1,60 @@
 const inquirer = require('inquirer');
-const { result } = require('lodash');
 const db = require('../db/connection');
 
-const addEmployee = (init) => {
+const addEmployee = async (init) => {
+    try{
     console.log('Adding an employee');
     var selectedParams = [];
+    
+    const dbRoles = await db.promise().query('SELECT title, department_id FROM roles');
+
+    var roles = dbRoles[0].map(({title, department_id}) => ({name: title, value: department_id}));
+
+    const dbManagers = await db.promise().query('SELECT first_name, id FROM employee WHERE manager_id IS NULL');
+
+    var managers = dbManagers[0].map(({first_name, id})=> ({name: first_name, value: id}));
+
     inquirer.prompt([
         {
             type: 'input',
             message: 'Employees First Name?',
-            name: 'emName',
-        },
+            name: 'emName'
+        }, 
         {
             type: 'input',
-            message: 'Employees Last Name?',
-            name: 'emLast',
-        },
-
+            message: 'Employees Last Name',
+            name: 'emLast'
+        }, {
+            type: 'list',
+            message: 'What is the employees role?',
+            name: 'emRoles',
+            choices: roles,
+        }, {
+            type: 'list',
+            message: 'Who is the employees manager?',
+            name: 'emManager',
+            choices: managers,
+        }
     ])
     .then(answer => {
-        db.query('SELECT title, department_id FROM roles', function(err, result) {
-            if (err) { console.log(err) }
-            else {
-                selectedParams.push(answer.emName);
-                selectedParams.push(answer.emLast);
-                const roles = 
-                result.map(({title, department_id}) => ({name: title, value: department_id}));
-                console.log('Before role prompts')
-                inquirer.prompt([
-                    {
-                        type: 'list',
-                        message: 'What is the employees role?',
-                        name: 'emRole',
-                        choices: roles,
-                    }
-                ])
-                console.log('After role prompts');
-                selectedParams.push(answer.emRole);
-            }
-        })  })
-        .then(answer => {
-            db.query(`SELECT first_name, manager_id FROM employee WHERE manager_id IS NULL`, function(err, result) {
-                if (err) { console.log(err) }
-                    const managers = result.map(({first_name, manager_id}) => 
-                    ({name: first_name, value: manager_id}));
-                    console.log('Before manager')
-                    inquirer.prompt([
-                        {
-                            type: 'list',
-                            message: 'Who is the employees manager?',
-                            name: 'emManager',
-                            choices: managers,
-                        }
-                    ])
-                    console.log('After manager');
-                   selectedParams.push(answer.emManager);
-            })  }) 
-            .then(answers => {
-                db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', selectedParams, function (err, results) {
-                    if (err) { console.log(err) }
-                    else {
-                        console.table(results);
-                        init();
-                    }
-                }) })
-
-        .catch(err => console.error(err));
+        selectedParams.push(answer.emName);
+        selectedParams.push(answer.emLast);
+        selectedParams.push(answer.emRole);
+        selectedParams.push(answer.emManager);
+      
+        db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)`, selectedParams, function(err, result){
+            if(err){console.log(err)}
+                console.table(result);
+                init();
+        })
+    })
 }
-//This is done and working
+catch(err)
+{
+    console.error(err)
+}
+}
+
 const addRole = (init) => {
     let selectedParams = [];
     inquirer.prompt([
@@ -113,7 +100,6 @@ const addRole = (init) => {
         .catch(err => console.error(err));
 }
 
-//This is done and working!
 const addDepartment = (init) => {
     inquirer.prompt([
         {
@@ -126,7 +112,6 @@ const addDepartment = (init) => {
             db.query('INSERT INTO department (dept_name) VALUES(?)', [answers.deptName], function (err, results) {
                 if (err) { console.log(err) }
                 else {
-                    deptArray.push(answers.deptName);
                     console.log(`Added ${answers.deptName} to the table`);
                     init();
                 }
