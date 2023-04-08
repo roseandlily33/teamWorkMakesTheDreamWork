@@ -71,6 +71,7 @@ const addEmployee = (init) => {
 }
 
 const addRole = (init) => {
+    let selectedParams = [];
     inquirer.prompt([
         {
             type: 'input',
@@ -87,8 +88,10 @@ const addRole = (init) => {
         .then(answer => {
         db.query(`SELECT dept_name, id FROM department`, function(err, results){
             if(err){console.log(err);}
-                var selectedParams = [answer.roleName, answer.roleSalary];
+            selectedParams.push(answer.roleName);
+            selectedParams.push(answer.roleSalary);
                 const dept = results.map(({dept_name, id})=> ({name: dept_name, value: id}));
+                console.log(dept);
                 inquirer.prompt([
                     {
                         type: 'list',
@@ -97,20 +100,16 @@ const addRole = (init) => {
                         choices: dept
                     }
                 ])
-                selectedParams.push(answer.dept);  
-        })})
-        //Throwing an error that selectedParams are not defined. 
-        .then(answer => {
-            db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', selectedParams, function (err, results) {
-                if (err) { console.log(err); 
-                   } else {
-                    console.log(answer + 'I am here');
-                    console.table(results);
-                    init();
-                }
-            })
-        })
-        
+                selectedParams.push(answer.roleDept);
+                db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', selectedParams, function (err, results) {
+                    if (err) { console.log(err); 
+                       } else {
+                        console.log(answer + 'I am here');
+                        console.table(results);
+                       init();
+                    }
+                })  
+        })}) 
         .catch(err => console.error(err));
 }
 
