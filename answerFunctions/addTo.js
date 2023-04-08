@@ -34,7 +34,6 @@ const addEmployee = (init) => {
                         choices: roles,
                     }
                 ])
-               
             }
         })  })
         .then(answer => {
