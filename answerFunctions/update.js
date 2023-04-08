@@ -37,7 +37,7 @@ const updateEmployee = async(init) => {
             selectedParams.push(answer.upId);
             db.query('UPDATE employee SET role_id = (?) WHERE id = (?)', selectedParams, function(err, result){
              if(err){console.log(err)}
-            console.table(result);
+            console.log(`Your employee's role has been updated`);
             init();
         })
         })
