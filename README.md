@@ -5,10 +5,10 @@ Week #12 Challenge
 A content management system (CMS) the allows easy access to information that is stored in databases. Using node.js, inquirer, console.table, and MySQL. On running node index it presents you with a list of options that you can select, from updating the employees role, to seeing each table to adding an employee, role or department. 
 
 ## Screenshots:
-Coming Soon
+<img width="370" alt="Screenshot 2023-04-08 at 1 03 25 PM" src="https://user-images.githubusercontent.com/109821108/230731219-331bda4b-7b95-480c-b596-cde6b528a2e2.png">
 
 ## Video:
-Coming Soon
+https://drive.google.com/file/d/1LnIU6AhUep5vqcXbil3RxJDcC2YQrD2U/view
 
 ## Usage:
 Clone the project, run npm install, run node index, in a seperate terminal, cd into the db, run mysql and login, run source schema.sql, and source seeds.sql, and select from the list what action you would like to follow and follow the prompts. 
