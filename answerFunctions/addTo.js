@@ -5,7 +5,7 @@ const addEmployee = async (init) => {
     try{
     console.log('Adding an employee');
     var selectedParams = [];
-    
+
     const dbRoles = await db.promise().query('SELECT title, department_id FROM roles');
 
     var roles = dbRoles[0].map(({title, department_id}) => ({name: title, value: department_id}));
@@ -44,8 +44,8 @@ const addEmployee = async (init) => {
       
         db.query(`INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)`, selectedParams, function(err, result){
             if(err){console.log(err)}
-                console.table(result);
-                init();
+               console.log(`${answer.emName} has been inserted into employees`);
+               init();
         })
     })
 }
@@ -73,11 +73,10 @@ const addRole = (init) => {
         .then(answer => {
         db.query(`SELECT dept_name, id FROM department`, function(err, results){
             if(err){console.log(err);}
-
             selectedParams.push(answer.roleName);
             selectedParams.push(answer.roleSalary);
-                const dept = results.map(({dept_name, id})=> ({name: dept_name, value: id}));
 
+            const dept = results.map(({dept_name, id})=> ({name: dept_name, value: id}));
                 inquirer.prompt([
                     {
                         type: 'list',
@@ -91,8 +90,7 @@ const addRole = (init) => {
                 db.query('INSERT INTO roles (title, salary, department_id) VALUES(?,?,?)', selectedParams, function (err, results) {
                     if (err) { console.log(err); 
                        } else {
-                        console.log(answer + 'I am here');
-                        console.table(results);
+                      console.log(`${selectedParams} has been added into roles`)
                        init();
                     }
                 })  })
