@@ -1,6 +1,5 @@
 const db = require('../db/connection');
 
-
 const viewAllDepartments = (init) => {
     db.query('SELECT * FROM department', function (err, results) {
         if (err) {
@@ -10,7 +9,6 @@ const viewAllDepartments = (init) => {
             console.log('Getting departments');
             console.table(results);
             init();
-          
         }
     })
 }
@@ -28,9 +26,8 @@ const viewAllEmployees = (init) => {
             init();
         }
     })
- 
 }
-//Complete
+
 const viewAllRoles = (init) => {
     db.query(`SELECT roles.id, roles.title, roles.salary, department.dept_name FROM roles
     LEFT JOIN department ON department.id = roles.department_id

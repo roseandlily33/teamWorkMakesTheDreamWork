@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const { result } = require('lodash');
 const db = require('../db/connection');
 
 const addEmployee = (init) => {
@@ -15,20 +16,48 @@ const addEmployee = (init) => {
             name: 'emLast',
 
         },
+       
+    ])
+    .then(answer => {
+        const selectedParams = [answer.emName, emLast];
+
+        db.query('SELECT', function(err, result) {
+            if (err) { console.log(err) }
+            else {
+                const roles = results.map({})
+            }
+        })
+        .then(()=> {
+        inquirer.prompt([
         {
             type: 'list',
             message: 'What is the employees role?',
             name: 'emRole',
-            choices: empRoles,
-        },
-        {
-            type: 'list',
-            message: 'Who is the employees manager?',
-            name: 'emManager',
-            choices: managerArray,
+            choices: comingsoon,
         }
-
     ])
+    selectedParams.push(emRole);
+    }) })
+    .then(answer => {
+        db.query('SELECT', function(err, result) {
+            if (err) { console.log(err) }
+            else {
+                const managers = result.map({})
+
+            }
+        })
+        .then(()=> {
+        inquirer.prompt([
+            {
+                type: 'list',
+                message: 'Who is the employees manager?',
+                name: 'emManager',
+               choices: comingsoon,
+            }
+        ])
+        selectedParams.push(emManager);
+    })})
+
         .then(answers => {
             db.query('INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [answers.emName, answers.emLast, answers.emRole, answers.emManager], function (err, results) {
                 if (err) { console.log(err) }
@@ -40,6 +69,7 @@ const addEmployee = (init) => {
         })
         .catch(err => console.error(err));
 }
+
 const addRole = (init) => {
     inquirer.prompt([
         {
@@ -55,11 +85,9 @@ const addRole = (init) => {
 
         }])
         .then(answer => {
-        let selectedParams = [answer.roleName, answer.roleSalary];
         db.query(`SELECT dept_name, id FROM department`, function(err, results){
             if(err){console.log(err);}
-            else {
-                console.log(results);
+                var selectedParams = [answer.roleName, answer.roleSalary];
                 const dept = results.map(({dept_name, id})=> ({name: dept_name, value: id}));
                 inquirer.prompt([
                     {
@@ -69,8 +97,7 @@ const addRole = (init) => {
                         choices: dept
                     }
                 ])
-                selectedParams.push(answer.dept);
-            }
+                selectedParams.push(answer.dept);  
         })})
         //Throwing an error that selectedParams are not defined. 
         .then(answer => {
@@ -83,6 +110,7 @@ const addRole = (init) => {
                 }
             })
         })
+        
         .catch(err => console.error(err));
 }
 

@@ -24,7 +24,7 @@ inquirer.prompt(question)
         case 'Add Employee': addEmployee(init) ; break;
         case 'Add Role': addRole(init) ; break;
         case 'Add Department': addDepartment(init) ; break;
-       // case 'Update A Employee': updateEmployee(init); break;
+        //case 'Update A Employee': updateEmployee(init); break;
         case 'Quit': process.exit(); break; 
         default: console.log('This is not a valid action'); break;
     }
