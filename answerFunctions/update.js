@@ -1,8 +1,5 @@
 const db = require('../db/connection');
 const inquirer = require('inquirer');
-const { empRoles } = require('./addTo');
-
-const empArray = ['Cameron', 'Blake', 'Veronica', 'Nicolas', 'Gwen', 'Dylan', 'Madison'];
 
 const updateEmployee = (init) => {
     console.log('Updating an employee');
